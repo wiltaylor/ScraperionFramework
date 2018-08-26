@@ -160,8 +160,17 @@ $scraper = Connect-WebScraper -Url 'http://mywebsite.com'
 $tag = $scraper | invoke-WebScraperExpression -Expression "document.querySelector('.foo');"
 ```
 
+## Scraperion Framework vs Scraperion PowerShell module
+The Scraperion Framework is a .net DLL which contains a simple interface to do all the actions lised above. The Scraperion PowerShell 
+module consumes the library and exposes the functionality to PowerShell.
+
+Eventually the plan is to release the framework as a nuget package but at the moment you need to either download the PowerShell module or
+build it from source.
+
 ## Credits
 This project makes use of the following Open Source projects:
 
 * [Puppet Sharp](https://www.puppeteersharp.com) - Awesome chromium automation framework for .net. (License: MIT)
 * [Tesseract and .NET Wrapper](https://github.com/charlesw/tesseract) - OCR library used to ocr images. (License: Apache 2.0 for Tesseract and MIT for the .net interop library. See project page for details.).
+* [Newtonsoft JSON](https://www.newtonsoft.com/json) - JSON parsing library 
+* [XmlDoc2CmdletDoc](https://github.com/red-gate/XmlDoc2CmdletDoc) - Awesome tool that converts xml docs in C# into cmdlet doc in your PowerShell module.
