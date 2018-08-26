@@ -1,4 +1,4 @@
-# ScraperionFramework
+# Scraperion Framework
 Scraperion is a framework that allows easy UI and Web automation primarily designed for dealing with legacy environments where automation is hard.
 
 The main features of scraperion are as follows:
