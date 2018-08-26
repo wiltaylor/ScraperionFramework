@@ -14,8 +14,16 @@ namespace ScraperionFramework
         private decimal m_MouseX = 0;
         private decimal m_MouseY = 0;
 
-        public WebScraper(bool headless = true, string agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36")
+
+        public static readonly string DefaultAgent =
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36";
+
+        public WebScraper(bool headless = true, string agent = "")
         {
+
+            if (agent == "")
+                agent = DefaultAgent;
+
 
             var ops = new BrowserFetcherOptions
             {
