@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System.IO;
+using System.Management.Automation;
 using ScraperionFramework;
 
 namespace Scraperion
@@ -12,14 +13,36 @@ namespace Scraperion
         [Parameter]
         public SwitchParameter Pdf { get; set; }
 
+        [Parameter]
+        public string Path { get; set; }
+
         protected override void ProcessRecord()
         {
             if (Pdf)
             {
-                WriteObject(Scraper.CreatePdf());
+                var pdf = Scraper.CreatePdf();
+
+                WriteObject(pdf);
+
+                if (Path == null)
+                    return;
+
+                var buffer = new byte[pdf.Length];
+                pdf.Read(buffer, 0, buffer.Length);
+                File.WriteAllBytes(Path, buffer);
+
+                return;
             }
-            
-            WriteObject(Scraper.SnapshotBitmap());
+
+            var img = Scraper.SnapshotBitmap();
+
+            WriteObject(img);
+
+            if (Path == null)
+                return;
+
+            img.Save(Path);
+
         }
     }
 }

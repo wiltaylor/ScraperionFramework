@@ -14,7 +14,7 @@ namespace Scraperion
 
         protected override void ProcessRecord()
         {
-            WriteObject(Scraper.ExecAsync(Expression));
+            WriteObject(Scraper.Exec(Expression));
         }
     }
 }

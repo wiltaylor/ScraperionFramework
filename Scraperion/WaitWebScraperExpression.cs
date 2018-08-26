@@ -4,7 +4,7 @@ using ScraperionFramework;
 
 namespace Scraperion
 {
-    [Cmdlet(VerbsLifecycle.Wait, "WebScrapExpression")]
+    [Cmdlet(VerbsLifecycle.Wait, "WebScraperExpression")]
     public class WaitWebScraperExpression : Cmdlet
     {
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -15,7 +15,7 @@ namespace Scraperion
 
         protected override void ProcessRecord()
         {
-            while (Scraper.Exec(Expression).ToLower() != "true")
+            while (Scraper.Exec(Expression)?.ToLower() != "true")
             {
                 Thread.Sleep(1000);
             }

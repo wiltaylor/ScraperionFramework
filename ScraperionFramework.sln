@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraperion", "Scraperion\Sc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarmess", "TestHarmess\TestHarmess.csproj", "{3226AD4F-B0AE-413D-B13D-CFF36B023F97}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PuppeteerSharp", "puppeteer-sharp\lib\PuppeteerSharp\PuppeteerSharp.csproj", "{B4CC8F0D-7D5B-4D5B-AEA9-B4610F34A75D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{3226AD4F-B0AE-413D-B13D-CFF36B023F97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3226AD4F-B0AE-413D-B13D-CFF36B023F97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3226AD4F-B0AE-413D-B13D-CFF36B023F97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4CC8F0D-7D5B-4D5B-AEA9-B4610F34A75D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4CC8F0D-7D5B-4D5B-AEA9-B4610F34A75D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4CC8F0D-7D5B-4D5B-AEA9-B4610F34A75D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4CC8F0D-7D5B-4D5B-AEA9-B4610F34A75D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

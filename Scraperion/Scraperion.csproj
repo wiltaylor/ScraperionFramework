@@ -58,9 +58,6 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PuppeteerSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PuppeteerSharp.1.4.0\lib\netstandard2.0\PuppeteerSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -117,6 +114,12 @@
     <Compile Include="ConnectWebScraper.cs" />
     <Compile Include="ConvertFromImageToText.cs" />
     <Compile Include="DisconnectWebScraper.cs" />
+    <Compile Include="frmImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmImage.Designer.cs">
+      <DependentUpon>frmImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="GetImage.cs" />
     <Compile Include="GetWebScraperSnapshot.cs" />
     <Compile Include="InvokeWebScraperExpression.cs" />
@@ -129,6 +132,8 @@
     <Compile Include="SendWebScraperKeys.cs" />
     <Compile Include="SendWebScraperMouse.cs" />
     <Compile Include="SetWebScraperFocus.cs" />
+    <Compile Include="ShowImage.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="TestImage.cs" />
     <Compile Include="WaitImage.cs" />
     <Compile Include="WaitWebScraperExpression.cs" />
@@ -152,10 +157,19 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\puppeteer-sharp\lib\PuppeteerSharp\PuppeteerSharp.csproj">
+      <Project>{b4cc8f0d-7d5b-4d5b-aea9-b4610f34a75d}</Project>
+      <Name>PuppeteerSharp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ScraperionFramework\ScraperionFramework.csproj">
       <Project>{06837ace-3ee3-4286-b70b-41213078f878}</Project>
       <Name>ScraperionFramework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="frmImage.resx">
+      <DependentUpon>frmImage.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

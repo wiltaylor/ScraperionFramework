@@ -14,23 +14,43 @@ namespace ScraperionFramework
         private decimal m_MouseX = 0;
         private decimal m_MouseY = 0;
 
-        public WebScraper()
+        public WebScraper(bool headless = true, string agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36")
         {
-            (new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision)).Wait();
+
+            var ops = new BrowserFetcherOptions
+            {
+                Path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\scraperion\\browser"
+            };
+
+            (new BrowserFetcher(ops).DownloadAsync(BrowserFetcher.DefaultRevision)).Wait();
 
             var browser = Puppeteer.LaunchAsync(new LaunchOptions
             {
-                Headless = true,
-                IgnoreHTTPSErrors = true
+                Headless = headless,
+                IgnoreHTTPSErrors = true,
 
             });
 
             browser.Wait();
             m_browser = browser.Result;
 
+
             var page = m_browser.NewPageAsync();
             page.Wait();
             m_page = page.Result;
+
+            m_page.Error += (s, e) => {
+                Console.WriteLine("Error:" + e.ToString());
+            };
+
+            m_page.PageError += (s, e) =>
+            {
+                Console.WriteLine("Error:" + e.ToString());
+            };
+
+            m_page.Console += (s, e) => { Console.WriteLine(e.Message.Text); };
+
+            m_page.SetUserAgentAsync(agent).Wait();
         }
 
         public void SetAuth(string username, string password)
@@ -60,7 +80,17 @@ namespace ScraperionFramework
         public string Url
         {
             get => m_page.Url;
-            set => m_page.GoToAsync(value).Wait();
+            set
+            {
+                try
+                {
+                    m_page.GoToAsync(value).Wait();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
         }
 
         public string Exec(string script)
@@ -73,7 +103,11 @@ namespace ScraperionFramework
 
         public async Task<string> ExecAsync(string script)
         {
-            return await m_page.EvaluateExpressionAsync<string>(script);
+
+           var data = await m_page.EvaluateExpressionAsync(script);
+
+            return (string)data.ToString();
+
         }
 
         public Bitmap SnapshotBitmap()
@@ -199,7 +233,7 @@ namespace ScraperionFramework
             await m_page.ClickAsync(target);
         }
 
-        private string Content
+        public string Content
         {
             get
             {
@@ -213,7 +247,6 @@ namespace ScraperionFramework
                 data.Wait();
             }
         }
-
 
         public void Dispose()
         {

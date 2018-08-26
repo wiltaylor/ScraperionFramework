@@ -18,13 +18,13 @@ namespace Scraperion
             var ss = new ScreenScraper();
 
             if (SearchInImage == null)
-                ss.CaptureScreen();
+                SearchInImage = ss.CaptureScreen();
 
             var result = ss.Find(SearchInImage, Image);
 
 
             //-1 indicates it didn't find the image.
-            WriteObject(result.Left == -1 && result.Right == -1);
+            WriteObject(result.Left != -1 && result.Right != -1);
         }
     }
 }
