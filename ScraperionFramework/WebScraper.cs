@@ -7,6 +7,10 @@ using PuppeteerSharp.Input;
 
 namespace ScraperionFramework
 {
+    /// <summary>
+    /// Web scraper class.
+    /// This class handles all interaction with chromium.
+    /// </summary>
     public class WebScraper : IDisposable
     {
         private readonly Browser m_browser;
@@ -14,10 +18,17 @@ namespace ScraperionFramework
         private decimal m_MouseX = 0;
         private decimal m_MouseY = 0;
 
-
+        /// <summary>
+        /// Defualt agent string this library uses. Simulates Chrome installed on windows 10.
+        /// </summary>
         public static readonly string DefaultAgent =
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36";
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="headless">Set to false to show chromium window.</param>
+        /// <param name="agent">Agent to use when accessing pages. Uses DefaultAgent if non is set.</param>
         public WebScraper(bool headless = true, string agent = "")
         {
 
@@ -61,22 +72,32 @@ namespace ScraperionFramework
             m_page.SetUserAgentAsync(agent).Wait();
         }
 
+        /// <summary>
+        /// Set username and password to authenticate against web pages with.
+        /// </summary>
+        /// <param name="username">Username to authenticate with</param>
+        /// <param name="password">Password to autrhenticate with.</param>
         public void SetAuth(string username, string password)
         {
             SetAuthAsync(username, password).Wait();
         }
 
-        public async Task SetAuthAsync(string username, string password)
+        private async Task SetAuthAsync(string username, string password)
         {
             await m_page.AuthenticateAsync(new Credentials {Username = username, Password = password});
         }
 
+        /// <summary>
+        /// Sets the view port size of the page.
+        /// </summary>
+        /// <param name="width">Width of the page in pixels.</param>
+        /// <param name="height">Height of page in pixels.</param>
         public void SetViewPort(int width, int height)
         {
             SetViewPortAsync(width, height).Wait();
         }
 
-        public async Task SetViewPortAsync(int width, int height)
+        private async Task SetViewPortAsync(int width, int height)
         {
             await m_page.SetViewportAsync(new ViewPortOptions
             {
@@ -85,6 +106,9 @@ namespace ScraperionFramework
             });
         }
 
+        /// <summary>
+        /// Gets or sets the url the page is currently at.
+        /// </summary>
         public string Url
         {
             get => m_page.Url;
@@ -101,6 +125,12 @@ namespace ScraperionFramework
             }
         }
 
+        /// <summary>
+        /// Executes a javascript expression on page.
+        /// This is simuilar to typing a command in the java console.
+        /// </summary>
+        /// <param name="script">Expression to run.</param>
+        /// <returns>Json of executed result.</returns>
         public string Exec(string script)
         {
             var result = ExecAsync(script);
@@ -109,7 +139,7 @@ namespace ScraperionFramework
             return result.Result;
         }
 
-        public async Task<string> ExecAsync(string script)
+        private async Task<string> ExecAsync(string script)
         {
 
            var data = await m_page.EvaluateExpressionAsync(script);
@@ -117,7 +147,10 @@ namespace ScraperionFramework
             return (string)data.ToString();
 
         }
-
+        /// <summary>
+        /// Takes a screenshot of the target page.
+        /// </summary>
+        /// <returns>Bitmap image containing screenshot.</returns>
         public Bitmap SnapshotBitmap()
         {
             var result = SnapshotBitmapAsync();
@@ -125,7 +158,7 @@ namespace ScraperionFramework
             return result.Result;
         }
 
-        public async Task<Bitmap> SnapshotBitmapAsync()
+        private async Task<Bitmap> SnapshotBitmapAsync()
         {
             var data = await m_page.ScreenshotStreamAsync();
             var image = new Bitmap(data);
@@ -134,70 +167,101 @@ namespace ScraperionFramework
             return image;
         }
 
+        /// <summary>
+        /// Simulates key presses on page.
+        /// </summary>
+        /// <param name="text">Text to send to page.</param>
         public void SendKeys(string text)
         {
             SendKeysAsync(text).Wait();
         }
 
-        public async Task SendKeysAsync(string text)
+        private async Task SendKeysAsync(string text)
         {
             await m_page.Keyboard.TypeAsync(text);
         }
 
+        /// <summary>
+        /// Simulates moving the mouse on the page.
+        ///
+        /// Note: this does not move the system mouse.
+        /// </summary>
+        /// <param name="x">X coordinates to move mouse to.</param>
+        /// <param name="y">Y coordinates to move mouse to.</param>
         public void MoveMouse(decimal x, decimal y)
         {
             MoveMouseAsync(x, y).Wait();
         }
 
-        public async Task MoveMouseAsync(decimal x, decimal y)
+        private async Task MoveMouseAsync(decimal x, decimal y)
         {
             await m_page.Mouse.MoveAsync(x, y);
             m_MouseX = x;
             m_MouseY = y;
         }
 
+        /// <summary>
+        /// Simulates a mouse click on page.
+        /// </summary>
+        /// <param name="button">Mouse button to simulate.</param>
         public void MouseClick(MouseButton button)
         {
             MouseClickAsync(button).Wait();
         }
 
-        public async Task MouseClickAsync(MouseButton button)
+        private async Task MouseClickAsync(MouseButton button)
         {
             await m_page.Mouse.ClickAsync(m_MouseX, m_MouseY, new ClickOptions{ Button = button == MouseButton.Left ? PuppeteerSharp.Input.MouseButton.Left : PuppeteerSharp.Input.MouseButton.Right });
         }
 
+        /// <summary>
+        /// Simulates a mouse up event on page.
+        /// </summary>
+        /// <param name="button">Mouse button to simulate.</param>
         public void MouseUp(MouseButton button)
         {
             MouseUpAsync(button).Wait();
             
         }
 
-        public async Task MouseUpAsync(MouseButton button)
+        private async Task MouseUpAsync(MouseButton button)
         {
             await m_page.Mouse.UpAsync(new ClickOptions { Button = button == MouseButton.Left ? PuppeteerSharp.Input.MouseButton.Left : PuppeteerSharp.Input.MouseButton.Right });
         }
 
+        /// <summary>
+        /// Simulates a mouse down event on page.
+        /// </summary>
+        /// <param name="button">Mouse button to simulate.</param>
         public void MouseDown(MouseButton button)
         {
             MouseDownAsync(button).Wait();
         }
 
-        public async Task MouseDownAsync(MouseButton button)
+        private async Task MouseDownAsync(MouseButton button)
         {
             await m_page.Mouse.DownAsync(new ClickOptions { Button = button == MouseButton.Left ? PuppeteerSharp.Input.MouseButton.Left : PuppeteerSharp.Input.MouseButton.Right });
 
         }
 
+        /// <summary>
+        /// Simulates a touch tap on a page.
+        /// </summary>
+        /// <param name="target">Javascript selector for element to tap on.</param>
         public void TapScreen(string target)
         {
             TapScreenAsync(target).Wait();
         }
 
-        public async Task TapScreenAsync(string target)
+        private async Task TapScreenAsync(string target)
         {
             await m_page.TapAsync(target);
         }
 
+        /// <summary>
+        /// Generates a pdf of the page.
+        /// </summary>
+        /// <returns>Stream containing the pdf data.</returns>
         public Stream CreatePdf()
         {
             var data = CreatePdfAsync();
@@ -206,41 +270,56 @@ namespace ScraperionFramework
 
         }
 
-        public async Task<Stream> CreatePdfAsync()
+        private async Task<Stream> CreatePdfAsync()
         {
             return await m_page.PdfStreamAsync();
         }
 
+        /// <summary>
+        /// Waits for expression to be to be true.
+        /// </summary>
+        /// <param name="expression">Expression to wait on.</param>
         public void WaitOnScript(string expression)
         {
             WaitOnScriptAsync(expression).Wait();
         }
 
-        public async Task WaitOnScriptAsync(string expression)
+        private async Task WaitOnScriptAsync(string expression)
         {
             await m_page.WaitForExpressionAsync(expression);
         }
 
+        /// <summary>
+        /// Selects element on page to have focus.
+        /// </summary>
+        /// <param name="target">Javascript selector to make have focus.</param>
         public void Focus(string target)
         {
             FocusAsync(target).Wait();
         }
 
-        public async Task FocusAsync(string target)
+        private async Task FocusAsync(string target)
         {
             await m_page.FocusAsync(target);
         }
 
+        /// <summary>
+        /// Clicks on target element on page.
+        /// </summary>
+        /// <param name="target">Javascript selector of element to click on.</param>
         public void Click(string target)
         {
             ClickAsync(target).Wait();
         }
 
-        public async Task ClickAsync(string target)
+        private async Task ClickAsync(string target)
         {
             await m_page.ClickAsync(target);
         }
 
+        /// <summary>
+        /// Html content of page. Useful for scraping the html directly.
+        /// </summary>
         public string Content
         {
             get
@@ -256,6 +335,11 @@ namespace ScraperionFramework
             }
         }
 
+        /// <inheritdoc />
+        /// <summary>
+        /// Dispose method.
+        /// This will close out chromium session.
+        /// </summary>
         public void Dispose()
         {
             m_browser?.Dispose();

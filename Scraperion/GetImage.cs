@@ -4,35 +4,63 @@ using ScraperionFramework;
 
 namespace Scraperion
 {
+    /// <summary>
+    /// <para type="synopsis">Retrives an image</para>
+    /// <para type="description">Retrives an image ready for use with screen scrapping cmdlets.</para>
+    /// </summary>
     [Cmdlet(VerbsCommon.Get, "Image")]
     public class GetImage : Cmdlet
     {
+        /// <summary>
+        /// <para type="description">Path to image to load. Can be most common image formats png, bmp, jpg, etc</para>
+        /// </summary>
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "PathSet")]
         public string Path { get; set; }
 
+        /// <summary>
+        /// <para type="description">Use this switch to grab a screenshot of the screen.</para>
+        /// </summary>
         [Parameter(Mandatory = true, ParameterSetName = "ScreenSet")]
         public SwitchParameter Screen { get; set; }
 
-
+        /// <summary>
+        /// <para type="description">X coordinates to being capture from</para>
+        /// </summary>
         [Parameter(ParameterSetName = "ScreenSet")]
         [Parameter(ParameterSetName = "ImageSet", Mandatory = true, Position = 1)]
         public int X { get; set; }
+
+        /// <summary>
+        /// <para type="description">Y coordinates to being capture from</para>
+        /// </summary>
 
         [Parameter(ParameterSetName = "ScreenSet")]
         [Parameter(ParameterSetName = "ImageSet", Mandatory = true, Position = 2)]
         public int Y { get; set; }
 
+        /// <summary>
+        /// <para type="description">Width of capture.</para>
+        /// </summary>
         [Parameter(ParameterSetName = "ScreenSet")]
         [Parameter(ParameterSetName = "ImageSet", Mandatory = true, Position = 3)]
         public int Width { get; set; }
 
+        /// <summary>
+        /// <para type="description">Height of capture.</para>
+        /// </summary>
         [Parameter(ParameterSetName = "ScreenSet")]
         [Parameter(ParameterSetName = "ImageSet", Mandatory = true, Position = 4)]
         public int Height { get; set; }
 
+        /// <summary>
+        /// <para type="description">Another image to do capture from, use X, Y, Width and Hight to select a subsection of image.</para>
+        /// </summary>
         [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, Position = 0, ParameterSetName = "ImageSet")]
         public Bitmap Image { get; set; }
 
+        /// <summary>
+        /// Powershell logic
+        /// </summary>
         protected override void ProcessRecord()
         {
             if (Path != null)

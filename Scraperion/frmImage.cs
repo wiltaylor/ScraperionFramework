@@ -3,15 +3,24 @@ using System.Windows.Forms;
 
 namespace Scraperion
 {
-    public partial class frmImage : Form
+    /// <inheritdoc />
+    /// <summary>
+    /// Class used to preview image files by Show-Image cmdlet.
+    /// </summary>
+    public partial class FrmImage : Form
     {
-        public frmImage(Bitmap img)
+        /// <inheritdoc />
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="img">Image to preview.</param>
+        public FrmImage(Image img)
         {
             InitializeComponent();
 
-            if (img.Width < this.Size.Width || img.Height < this.Size.Height)
+            if (img.Width < Size.Width || img.Height < Size.Height)
             {
-                this.Size = new Size(img.Width, img.Height);
+                Size = new Size(img.Width, img.Height);
             }
 
             ImageBox.Image = img;

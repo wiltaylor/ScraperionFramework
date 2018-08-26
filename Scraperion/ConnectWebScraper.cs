@@ -50,6 +50,9 @@ namespace Scraperion
         [Parameter]
         public string Agent { get; set; } = WebScraper.DefaultAgent;
         
+        /// <summary>
+        /// Powershell logic
+        /// </summary>
         protected override void ProcessRecord()
         {
             var scrapper = new WebScraper(!ShowUI, Agent);

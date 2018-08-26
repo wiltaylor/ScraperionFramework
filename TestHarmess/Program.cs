@@ -7,22 +7,8 @@ namespace TestHarmess
         static void Main(string[] args)
         {
 
-            //AppDomain.CurrentDomain.UnhandledException += (s, a) =>
-            //{
-            //    Console.WriteLine("Crashing exception!" + a.ToString());
+            WebScraper scrapper = new WebScraper(false) {Url = "http://www.weatherzone.com.au/"};
 
-            //};
-
-
-            //Application.ThreadException += (s, a) =>
-            //{
-            //    Console.WriteLine("Thread exception!");
-           // };
-
-
-            WebScraper scrapper = new WebScraper(false);
-
-            scrapper.Url = "http://www.weatherzone.com.au/";
 
             scrapper.Dispose();
 

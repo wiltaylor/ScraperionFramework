@@ -1,6 +1,6 @@
 ﻿namespace Scraperion
 {
-    partial class frmImage
+    partial class FrmImage
     {
         /// <summary>
         /// Required designer variable.
@@ -49,7 +49,7 @@
             this.ClientSize = new System.Drawing.Size(1340, 905);
             this.Controls.Add(this.ImageBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Name = "frmImage";
+            this.Name = "FrmImage";
             this.Text = "Image Viewer";
             ((System.ComponentModel.ISupportInitialize)(this.ImageBox)).EndInit();
             this.ResumeLayout(false);
