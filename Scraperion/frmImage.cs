@@ -18,7 +18,7 @@ namespace Scraperion
         {
             InitializeComponent();
 
-            if (img.Width < Size.Width || img.Height < Size.Height)
+            if ((img.Width < Size.Width || img.Height < Size.Height ) && img.Height > 100 && img.Width > 100)
             {
                 Size = new Size(img.Width, img.Height);
             }
